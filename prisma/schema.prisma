@@ -1,0 +1,115 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  name      String   @default("Admin")
+  role      String   @default("admin") // admin | editor
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_users")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  icon        String   @default("Globe") // lucide icon name
+  features    String[] // array of feature strings
+  techStack   String[] // array of tech names
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  duration    String   // e.g. "3 months"
+  level       String   // Beginner | Intermediate | Advanced
+  description String   @db.Text
+  curriculum  Json     // array of { module: string, topics: string[] }
+  price       Float?
+  instructor  String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("courses")
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  bio       String?  @db.Text
+  photo     String?  // URL or path
+  linkedIn  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  quote     String   @db.Text
+  name      String
+  company   String?
+  role      String?
+  avatar    String?  // URL or path
+  rating    Int      @default(5) // 1-5
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  enquiryType String?  // service | training | general | partnership
+  message     String   @db.Text
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@map("contact_submissions")
+}
+
+model SiteSettings {
+  id           String   @id @default("singleton")
+  companyName  String   @default("DMX Tech Services")
+  email        String   @default("info@dmxtechservices.com")
+  phone        String   @default("+91 9999999999")
+  address      String   @default("India")
+  linkedIn     String?
+  twitter      String?
+  instagram    String?
+  facebook     String?
+  youtube      String?
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}

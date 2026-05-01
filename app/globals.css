@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
+
 :root {
+  /* Brand Colors - Electric Violet & Cyan */
+  --color-primary: #6c63ff;
+  --color-accent: #00d4ff;
+  
+  /* Default to Dark Theme for premium tech feel */
+  --background: #0a0a0f;
+  --foreground: #f5f5f5;
+  --muted: #1a1a24;
+  --muted-foreground: #a3a3a3;
+  --border: #27273a;
+  --card: #14141f;
+  --card-foreground: #f5f5f5;
+  --navbar-bg: rgba(10, 10, 15, 0.8);
+  --footer-bg: #0d0d14;
+}
+
+:root[data-theme="light"] {
+  /* Light Theme */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f0f0f;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --border: #e5e5e5;
+  --card: #ffffff;
+  --card-foreground: #0f0f0f;
+  --navbar-bg: rgba(255, 255, 255, 0.8);
+  --footer-bg: #fafafa;
 }
 
 @theme inline {
+  /* Background & Foreground */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-accent-fg: var(--foreground);
+  
+  /* Brand Colors */
+  --color-primary: #6c63ff;
+  --color-accent: #00d4ff;
+  
+  /* Fonts */
+  --font-heading: 'Syne', var(--font-geist-sans);
+  --font-body: 'DM Sans', var(--font-geist-sans);
+  --font-code: 'JetBrains Mono', var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+code, pre {
+  font-family: var(--font-code);
+}
+
+/* Smooth transitions */
+* {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-red);
 }
